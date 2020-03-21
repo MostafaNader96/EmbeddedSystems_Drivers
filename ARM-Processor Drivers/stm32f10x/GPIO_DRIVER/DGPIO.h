@@ -1,7 +1,5 @@
-
 #ifndef DGPIO_H_
 #define DGPIO_H_
-
 
 typedef unsigned char uint_8t;
 typedef unsigned short int uint_16t;
@@ -11,27 +9,29 @@ typedef signed char int_8t;
 typedef signed short int int_16t;
 typedef signed short int int_32t;
 
-#define OK       0
-#define NOT_OK   1
+#define OK      					0
+#define NOT_OK  					1
 
-#define PIN_0	0x0001
-#define PIN_1   0x0002
-#define PIN_2	0x0004
-#define PIN_3	0x0008
-#define PIN_4	0x0010
-#define PIN_5	0x0020
-#define PIN_6	0x0040
-#define PIN_7	0x0080
-#define PIN_8	0x0100
-#define PIN_9	0x0200
-#define PIN_10	0x0400
-#define PIN_11	0x0800
-#define PIN_12	0x1000
-#define PIN_13	0x2000
-#define PIN_14	0x4000
-#define PIN_15	0x8000
-#define PIN_ALL 0xFFFF
+#define SET    						1
+#define CLEAR  						0
 
+#define PIN_0						0x0001
+#define PIN_1   					0x0002
+#define PIN_2						0x0004
+#define PIN_3						0x0008
+#define PIN_4						0x0010
+#define PIN_5						0x0020
+#define PIN_6						0x0040
+#define PIN_7						0x0080
+#define PIN_8						0x0100
+#define PIN_9						0x0200
+#define PIN_10						0x0400
+#define PIN_11						0x0800
+#define PIN_12						0x1000
+#define PIN_13						0x2000
+#define PIN_14						0x4000
+#define PIN_15						0x8000
+#define PIN_ALL 					0xFFFF
 
 #define MODE_PIN0_OP_PP				0X0000000000000000
 #define MODE_PIN0_OP_OD				0X0000000000000004
@@ -176,7 +176,7 @@ typedef signed short int int_32t;
 #define MODE_PIN15_IP_FLOATING	    0X4000000000000000
 #define MODE_PIN15_IP_PDR		    0X8000000000000000
 #define MODE_PIN15_IP_PUR			0XC000000000000000
-/*************************************************************************************************************/
+
 #define SPEED_PIN0_10MHZ			0X0000000000000001
 #define SPEED_PIN0_2MHZ				0X0000000000000002
 #define SPEED_PIN0_50MHZ			0X0000000000000003
@@ -257,22 +257,13 @@ typedef signed short int int_32t;
 #define SPEED_PIN15_50MHZ			0X3000000000000000
 #define SPEED_PIN15_INPUT			0X0000000000000000
 
-#define PORTA_BASE_ADDRESS  0X40010800
-#define PORTB_BASE_ADDRESS  0X40010C00
-#define PORTC_BASE_ADDRESS  0X40011000
-#define PORTD_BASE_ADDRESS  0X40011400
-#define PORTE_BASE_ADDRESS  0X40011800
-#define PORTF_BASE_ADDRESS  0X40011C00
-#define PORTG_BASE_ADDRESS  0X40012000
-
-
-#define PORT_A  ((Port_t*)(PORTA_BASE_ADDRESS))
-#define PORT_B  ((Port_t*)(PORTB_BASE_ADDRESS))
-#define PORT_C  ((Port_t*)(PORTC_BASE_ADDRESS))
-#define PORT_D  ((Port_t*)(PORTD_BASE_ADDRESS))
-#define PORT_E  ((Port_t*)(PORTE_BASE_ADDRESS))
-#define PORT_F  ((Port_t*)(PORTF_BASE_ADDRESS))
-#define PORT_G  ((Port_t*)(PORTG_BASE_ADDRESS))
+#define PORTA_BASE_ADDRESS  		0X40010800
+#define PORTB_BASE_ADDRESS  		0X40010C00
+#define PORTC_BASE_ADDRESS  		0X40011000
+#define PORTD_BASE_ADDRESS  		0X40011400
+#define PORTE_BASE_ADDRESS  		0X40011800
+#define PORTF_BASE_ADDRESS  		0X40011C00
+#define PORTG_BASE_ADDRESS  		0X40012000
 
 typedef struct
 {
@@ -285,28 +276,28 @@ typedef struct
 
 }Port_t;
 
+#define PORT_A  					((Port_t*)(PORTA_BASE_ADDRESS))
+#define PORT_B  					((Port_t*)(PORTB_BASE_ADDRESS))
+#define PORT_C  					((Port_t*)(PORTC_BASE_ADDRESS))
+#define PORT_D  					((Port_t*)(PORTD_BASE_ADDRESS))
+#define PORT_E  					((Port_t*)(PORTE_BASE_ADDRESS))
+#define PORT_F  					((Port_t*)(PORTF_BASE_ADDRESS))
+#define PORT_G  					((Port_t*)(PORTG_BASE_ADDRESS))
+
 
 typedef struct 
 {
 	uint_16t Pin ;
 	uint_64t Mode ;
 	uint_64t Speed;
-	Port_t* Port;
+	Port_t*  Port;
 }GPIO_t ;
 
-#define SET    1
-#define CLEAR  0
 
+uint_8t GPIO_Config(GPIO_t *Pins);
+uint_8t GPIO_Writee(Port_t *Port,uint_16t Pins,uint_8t State);
+uint_8t GPIO_ReadPort(Port_t *Port,uint_16t *Value);
+uint_8t GPIO_ReadPin(Port_t *Port,uint_16t Pin,uint_8t *Value);
 
-
-
-
-
-uint_8t GPIO_Config(GPIO_t * Pins ) ;
-
-uint_8t GPIO_Writee(Port_t *Port, uint_16t Pins , uint_8t State) ;
-
-uint_8t GPIO_ReadPort(Port_t *Port,uint_16t * Value) ;
-uint_8t GPIO_ReadPin(Port_t *Port,uint_16t Pin,uint_8t * Value) ;
 
 #endif

@@ -1,19 +1,9 @@
-/*
- * DNVIC.c
- *
- *  Created on: Feb 22, 2020
- *      Author: Ahmed Qandeel
- */
-
 #include "DNVIC.h"
 
+#define NVIC_BASE_ADDRESS   (( NVIC_t*) 0XE000E100)
+#define SCB_AIRCR 			*((volatile uint_32t*) 0XE000ED0C)
 
-#define NVIC_BASE_ADDRESS  (( NVIC_t*) 0XE000E100)
-#define SCB_AIRCR *((volatile uint_32t*) 0XE000ED0C)
-#define NVIC_IPR    (( Prior_t*) 0XE000E400)
-
-
-#define PASSWORD_MASK  0X05FA0000
+#define PASSWORD_MASK  		0X05FA0000
 
 typedef struct
 {
@@ -26,24 +16,17 @@ typedef struct
 	uint_32t ICPR[8];
 	uint_32t Reserved3[24];
 	uint_32t IABR[8];
+	uint_32t Reserved4[56];
+	uint_8t IPR[240];
 }NVIC_t;
 
-typedef struct
-{
-	uint_8t IPR[240];
-}Prior_t;
-
-
-
 NVIC_t   *NV=NVIC_BASE_ADDRESS;
-Prior_t  *Prior_Arr=NVIC_IPR;
 
 uint_8t NVIC_EnableIRQ(uint_8t IRQn)
 {
 	if( IRQn<240)
 	{
-    NV->ICPR[IRQn/32]=1<<IRQn%32;
-    NV->ISER[IRQn/32]=1<<IRQn%32;
+		NV->ISER[IRQn/32]=1<<IRQn%32;
 	}
 	else
 	{
@@ -52,13 +35,11 @@ uint_8t NVIC_EnableIRQ(uint_8t IRQn)
 	return OK;
 }
 
-
 uint_8t NVIC_DisableIRQ(uint_8t IRQn)
 {
 	if( IRQn<240)
 	{
-
-    NV->ICER[IRQn/32]= 1<<IRQn%32;
+		NV->ICER[IRQn/32]= 1<<IRQn%32;
 	}
 	else
 	{
@@ -71,7 +52,7 @@ uint_8t NVIC_SetPendingIRQ (uint_8t IRQn)
 {
 	if( IRQn<240)
 	{
-    NV->ISPR[IRQn/32] = 1<<IRQn%32;
+		NV->ISPR[IRQn/32] = 1<<IRQn%32;
 	}
 	else
 	{
@@ -84,7 +65,7 @@ uint_8t NVIC_ClearPendingIRQ (uint_8t IRQn)
 {
 	if( IRQn<240)
 	{
-    NV->ICPR[IRQn/32] = 1<<IRQn%32;
+		NV->ICPR[IRQn/32] = 1<<IRQn%32;
 	}
 	else
 	{
@@ -130,16 +111,15 @@ uint_8t NVIC_SetPriorityGrouping(uint_32t priority_grouping)
 		return NOT_OK;
 	}
 	return OK;
-
 }
 
-uint_8t NVIC_SetPriority (uint_8t IRQn, uint_8t priority)
+uint_8t NVIC_SetPriority (uint_8t IRQn, uint_8t Priority)
 {
 	if( IRQn<240)
 	{
-		if(priority<16)
+		if(Priority<16)
 		{
-			Prior_Arr->IPR[IRQn] = priority<<4 ;
+			NV->IPR[IRQn] = Priority<<4 ;
 		}
 		else
 		{
@@ -153,12 +133,12 @@ uint_8t NVIC_SetPriority (uint_8t IRQn, uint_8t priority)
 	return OK;
 }
 
-uint_8t NVIC_GetPriority (uint_8t IRQn, uint_8t *priority)
+uint_8t NVIC_GetPriority (uint_8t IRQn, uint_8t *Priority)
 {
 	if( IRQn<240)
 	{
 
-		*priority=Prior_Arr->IPR[IRQn]>>4 ;
+		*Priority=NV->IPR[IRQn]>>4 ;
 	}
 	else
 	{
@@ -167,3 +147,32 @@ uint_8t NVIC_GetPriority (uint_8t IRQn, uint_8t *priority)
 	return OK;
 }
 
+void NVIC_voidDisableAllPeripherals(void)
+{
+	asm("MOV R0, #1");
+	asm("MSR PRIMASK, R0");
+}
+
+void NVIC_voidEnableAllPeripherals(void)
+{
+	asm("MOV R0, #0");
+	asm("MSR PRIMASK, R0");
+}
+
+void NVIC_voidDisableAllFaults(void)
+{
+	asm("MOV R0, #1");
+	asm("MSR FAULTMASK, R0");
+}
+
+void NVIC_voidEnableAllFaults(void)
+{
+	asm("MOV R0, #0");
+	asm("MSR FAULTMASK, R0");
+}
+
+void NVIC_voidSetBASEPRI(uint_8t Priority)
+{
+	asm("LSLS R0,R0,#4");
+	asm("MSR  BASEPRI, R0");
+}
