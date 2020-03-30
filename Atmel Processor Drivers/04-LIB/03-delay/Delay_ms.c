@@ -4,7 +4,7 @@
 void Delay_ms(u32 Value)
 {
 	u32 i;
-	u32 count=(u32)(float)(Value-tm)/t1;
+	u32 count=(u32)(float)(Value-TM)/T1;
 	
 	for(i=0;i<count;i++)
 	{

@@ -1,3 +1,6 @@
+#ifndef SEVENSEGMENT_PRIVATE_H_
+#define SEVENSEGMENT_PRIVATE_H_
+
 #define ZERO 	0b11000000
 #define ONE 	0b11111001
 #define TWO 	0b10100100
@@ -9,4 +12,8 @@
 #define EIGHT 	0b10000000
 #define NINE 	0b10010000
 
+#define COMMON_CATHODE 	0
+#define COMMON_ANODE	1
+
+#endif
 

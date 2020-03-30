@@ -1,8 +1,8 @@
-/***********************************************/
-/* Author: Mostafa Nader*/
-/* Version: V01*/
-/* Date: 14 Jan 2020*/
-/***********************************************/
+#ifndef CLCD_INTERFACE_H_
+#define CLCD_INTERFACE_H_
+
+#define CLCD_u8_LINE_ONE	0
+#define CLCD_u8_LINE_TWO	1
 
 /*Description: This API Initializes the LCD*/
 void CLCD_voidInitialize(void);
@@ -19,8 +19,6 @@ void CLCD_voidWriteString(const char* Copy_pchString);
 /*Description: This API Shall Go to a certain location on the LCD*/
 void CLCD_voidGoToXYPos(u8 Copy_u8XPos,u8 Copy_u8YPos);
 
-void lcdnumberprinting(u32 num);
+void CLCD_WriteNumber(u32 Copy_u8Num);
 
-#define CLCD_u8_LINE_ONE	0
-#define CLCD_u8_LINE_TWO	1
-
+#endif

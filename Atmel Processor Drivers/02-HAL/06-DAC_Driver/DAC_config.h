@@ -1,28 +1,30 @@
-
+#ifndef DAC_CONFIG_H_
+#define DAC_CONFIG_H_
 
 #define DAC_U16_REFERENCE_VOLTAGE	5000UL
 
-#define DAC_U8_BIT0_PORT	'A'
-#define DAC_U8_BIT0_PIN		 0
+#define DAC_U8_BIT0_PORT	PORT_B
+#define DAC_U8_BIT0_PIN		 PIN0
 
-#define DAC_U8_BIT1_PORT	'A'
-#define DAC_U8_BIT1_PIN		 1
+#define DAC_U8_BIT1_PORT	PORT_B
+#define DAC_U8_BIT1_PIN		 PIN1
 
-#define DAC_U8_BIT2_PORT	'A'
-#define DAC_U8_BIT2_PIN		 2
+#define DAC_U8_BIT2_PORT	PORT_B
+#define DAC_U8_BIT2_PIN		 PIN2
 
-#define DAC_U8_BIT3_PORT	'A'
-#define DAC_U8_BIT3_PIN		 3
+#define DAC_U8_BIT3_PORT	PORT_B
+#define DAC_U8_BIT3_PIN		 PIN3
 
-#define DAC_U8_BIT4_PORT	'A'
-#define DAC_U8_BIT4_PIN		 4
+#define DAC_U8_BIT4_PORT	PORT_B
+#define DAC_U8_BIT4_PIN		 PIN4
 
-#define DAC_U8_BIT5_PORT	'A'
-#define DAC_U8_BIT5_PIN		 5
+#define DAC_U8_BIT5_PORT	PORT_B
+#define DAC_U8_BIT5_PIN		 PIN5
 
-#define DAC_U8_BIT6_PORT	'A'
-#define DAC_U8_BIT6_PIN		 6
+#define DAC_U8_BIT6_PORT	PORT_B
+#define DAC_U8_BIT6_PIN		 PIN6
 
-#define DAC_U8_BIT7_PORT	'A'
-#define DAC_U8_BIT7_PIN		 7
+#define DAC_U8_BIT7_PORT	PORT_B
+#define DAC_U8_BIT7_PIN		 PIN7
 
+#endif

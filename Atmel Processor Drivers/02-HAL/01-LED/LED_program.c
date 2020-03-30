@@ -1,17 +1,16 @@
 #include "std_types.h"
-#include "bits.h"
 #include "DIO_interface.h"
 #include "LED_interface.h"
 #include "LED_private.h"
 #include "LED_config.h"
 
 
-void SetLedOn  (void)
+void LED_SetLedOn(void)
 {
-	SetPinValue(LED_Port,LED_Pin,LED_Mode);
+	DIO_SetPinValue(LED_Port,LED_Pin,LED_Mode);
 }
 
-void SetLedOff (void)
+void LED_SetLedOff(void)
 {	
-	SetPinValue(LED_Port,LED_Pin,LED_Mode^0x01);
+	DIO_SetPinValue(LED_Port,LED_Pin,LED_Mode^0x01);
 }

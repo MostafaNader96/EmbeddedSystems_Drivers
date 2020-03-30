@@ -19,7 +19,12 @@ void Timer0_voidInit(void)
 	/*OverFlow Interrupt*/
 	SET_BIT(TIMSK,TIMER0_TOIE0);
 	/*Counter 8-bit Register Initialization*/
-	TCNT0=240;
+	TCNT0=6;
+}
+
+void Timer0_voidSetTimerPreload(u8 Copy_u8TimerPreload)
+{
+	TCNT0=Copy_u8TimerPreload;
 }
 
 

@@ -212,3 +212,23 @@ ErrorStatus DIO_GetPinValue(u8 Port,u8 Pin,u8 *Value)
 	return ERROR_OK;
 }
 
+ErrorStatus DIO_GetPortValue(u8 Port,u8 *Value)
+{
+	switch(Port)
+	{
+	case PORT_A:
+		*Value=PINA;
+		break;
+	case PORT_B:
+		*Value=PINB;
+		break;
+	case PORT_C:
+		*Value=PINC;
+		break;
+	case PORT_D:
+		*Value=PIND;
+		break;
+	default: return ERROR_NOK;
+	}
+	return ERROR_OK;
+}

@@ -1,8 +1,12 @@
+#ifndef LED_CONFIG_H_
+#define LED_CONFIG_H_
+
 /*Choose value from 0-7*/
-#define LED_Pin 1
+#define LED_Pin PIN1
 
 /*Choose value from A-D*/
-#define LED_Port 'A'
+#define LED_Port PORT_B
 
-/*Active high=1, Active low=0*/
-#define LED_Mode 1
+#define LED_Mode ACTIVE_LOW
+
+#endif

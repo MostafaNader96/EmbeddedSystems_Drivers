@@ -5,15 +5,11 @@
 #include "Switch_private.h"
 #include "Switch_config.h"
 
-
-u8 SwitchState  (void)
+void SWITCH_SwitchState(u8 *Data)
 {
-	u8 result;
-	result=(GetPinVal(Switch_Port,Switch_Pin));
+	DIO_GetPinValue(Switch_Port,Switch_Pin,Data);
 	
-	#if RELEASE_STATE==0
-		return result;
-	#else
-		return result^1;
+	#if RELEASE_STATE==PULL_UP_RESISTOR
+		 *Data=*Data^0x01;
 	#endif
 }

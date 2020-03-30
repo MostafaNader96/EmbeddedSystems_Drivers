@@ -1,0 +1,7 @@
+#ifndef SWITCH_PRIVATE_H_
+#define SWITCH_PRIVATE_H_
+
+#define PULL_UP_RESISTOR	1
+#define PULL_DOWN_RESISTOR	0
+
+#endif
