@@ -1,38 +1,44 @@
 /*
- * RTOS.c
+ * Scheduler.c
  *
  *  Created on: Feb 10, 2020
  *      Author: MOSTAFA
  */
-#include "std_types.h"
-#include "bits.h"
-#include "RTOS.h"
 
+#include "../../Library/std_types.h"
+#include "../Scheduler/Scheduler.h"
+#include "../TIMER/TIMER_interface.h"
+
+static void Scheduler(void);
 
 Task SystemTasks[TASKNUMBERS];
 
+void Timer_CallBack(void);
 
-void RTOS_StartOS(void)
+void Scheduler_StartOS(void)
 {
-	STK_voidSetCallBack(scheduler);
-	STK_voidSrart();
-	STK_voidSrart1(500000);
+
+	Timer0_voidSetCallBack(&Timer_CallBack);
+
+	Timer0_voidInit();
+
+	Timer0_SetTimeus(250);
+
 }
 
 
-void RTOS_SuspendTask(u8 TaskID)
+void Scheduler_SuspendTask(u8 TaskID)
 {
 	SystemTasks[TaskID].State=SUSPENDED;
 }
 
-void RTOS_ResumeTask(u8 TaskID)
+void Scheduler_ResumeTask(u8 TaskID)
 {
 	SystemTasks[TaskID].State=RUNNING;
 }
 
-void scheduler(void)
+static void Scheduler(void)
 {
-
 	u8 i;
 	for(i=0;i<TASKNUMBERS;i++)
 	{
@@ -52,7 +58,6 @@ void scheduler(void)
 		else
 		{
 			/*Task Suspended*/
-
 		}
 
 	}
@@ -62,7 +67,7 @@ void scheduler(void)
 
 
 
-void RTOS_CreateTask(u8 Priority,u32 Periodicity,void(*handler)(void), u32 FirstDelay,u8 State)
+void Scheduler_CreateTask(u8 Priority,u32 Periodicity,void(*handler)(void), u32 FirstDelay,u8 State)
 {
 	if(SystemTasks[Priority].Periodicity==0)
 	{
@@ -72,4 +77,17 @@ void RTOS_CreateTask(u8 Priority,u32 Periodicity,void(*handler)(void), u32 First
 	SystemTasks[Priority].State=State;
 	}
 
+}
+
+
+void Timer_CallBack(void)
+{
+	static u8 counter;
+	counter++;
+
+	if(4==counter)
+	{
+		counter=0;
+		Scheduler();
+	}
 }
